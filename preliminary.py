@@ -5,18 +5,12 @@ import matplotlib.pyplot as plt
 #############################################################################################
 ##INIT
 
-#GRID coords
-
-x_axe = np.linspace(-10,10,100)
-y_axe = np.linspace(-10,10,100)
-z_axe = np.linspace(-10,10,100)
-
 
 #STRIPE coords
-u = np.linspace(0,2*np.pi,100) #angle
+u = np.linspace(0,2*np.pi,1000) #angle
 v = np.linspace(-1,1,100) # disr=tance from cenral line on stripe
-
-
+print("u ",u.size,u.shape)
+print("v ",v.size,v.shape)
 
 
 ###################################################################################################
@@ -24,18 +18,20 @@ v = np.linspace(-1,1,100) # disr=tance from cenral line on stripe
 
 #COORDONATES
 
-x = np.empty_like(x_axe)
-y = np.empty_like(y_axe)
-z = np.empty_like(z_axe)
+x = np.empty((u.size,v.size))
+y = np.empty((u.size,v.size))
+z = np.empty((u.size,v.size))
 R = 3
+print("x ",x.size,x.shape)
 
-
-x = (R + v*np.cos(u/2))*np.cos(u)
-y = (R + v*np.cos(u/2))*np.sin(u) 
-z = v*np.sin(u/2)
+for i in range(v.size):
+    for j in range(u.size):
+        x[j,i] = (R + v[i]*np.cos(u[j]/2))*np.cos(u[j])
+        y[j,i] = (R + v[i]*np.cos(u[j]/2))*np.sin(u[j]) 
+        z[j,i] = v[i]*np.sin(u[j]/2)
 
 fig = plt.figure()
 ax = plt.axes(projection='3d')
-ax.plot_surface(x, y, z, cmap='viridis', edgecolor='green')
+ax.plot_surface(x, y, z, cmap='twilight')#, edgecolor='green')
 ax.set_title('Surface Plot')
 plt.show()
